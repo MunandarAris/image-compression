@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // import rect bootstrap component
-import { Button, Card, Container, Spinner } from "react-bootstrap";
+import { Alert, Button, Card, Container, Spinner } from "react-bootstrap";
 
 // import next js
 import Head from "next/head";
@@ -20,21 +20,27 @@ export default function HomePage() {
   const [size, setSize] = useState(0);
   const [oldSize, setOldSize] = useState(0);
   const [originalName, setOriginalName] = useState("image");
+  const [errorMessage, setErrorMessage] = useState(false);
   // setting before used imageCompression
   const options = {
-    maxSizeMB: 10,
+    maxSizeMB: 100,
     maxWidthOrHeight: 1920,
     useWebWorker: true,
   };
   // handle if change image
   const handleChangeImage = async (e) => {
     if (e.target.files[0] !== undefined) {
-      setLoading(true);
       // save image file
       const imageFile = e.target.files[0];
 
+      if (imageFile.type.split("/")[0] !== "image") {
+        return setErrorMessage(true);
+      }
+
+      setLoading(true);
+
       // get old size
-      setOldSize(parseInt(imageFile.size / 1000 / 1000, 10));
+      setOldSize((imageFile.size / 1000 / 1000).toFixed(2));
 
       // get original name
       setOriginalName(imageFile.name);
@@ -76,7 +82,26 @@ export default function HomePage() {
       </Head>
 
       <Container>
-        <Card className={`my-5 ${homeModule.card}`}>
+        {/* Error Message */}
+        {errorMessage ? (
+          <Alert
+            variant="danger d-flex justify-content-around align-items-center"
+            className="mt-4"
+          >
+            <h6>File Wajib Gambar</h6>
+            <i
+              className="bx bx-window-close"
+              style={{ cursor: "pointer" }}
+              onClick={() => setErrorMessage(false)}
+            ></i>
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {/* End Error Message */}
+
+        <Card className={`my-3 ${homeModule.card}`}>
           <div className="m-auto my-3">
             <Button className="btn btn-primary mx-2" onClick={openInputFile}>
               <i className="bx bxs-file-image"></i> UNGGAH FILE
