@@ -13,7 +13,7 @@ import homeModule from "../styles/Home.module.css";
 // used plugins
 import imageCompression from "browser-image-compression";
 
-export default function index() {
+export default function HomePage() {
   // initial state
   const [priview, setPriview] = useState("");
   const [loading, setLoading] = useState(false);
