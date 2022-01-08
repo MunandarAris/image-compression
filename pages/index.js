@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // import rect bootstrap component
 import { Button, Card, Container, Spinner } from "react-bootstrap";
@@ -15,11 +15,11 @@ import imageCompression from "browser-image-compression";
 
 export default function index() {
   // initial state
-  const [priview, setPriview] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [size, setSize] = React.useState(0);
-  const [oldSize, setOldSize] = React.useState(0);
-  const [originalName, setOriginalName] = React.useState("image");
+  const [priview, setPriview] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [size, setSize] = useState(0);
+  const [oldSize, setOldSize] = useState(0);
+  const [originalName, setOriginalName] = useState("image");
   // setting before used imageCompression
   const options = {
     maxSizeMB: 10,
